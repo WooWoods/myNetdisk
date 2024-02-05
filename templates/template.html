@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link type="text/css" rel="stylesheet" href={{ static_url("css/style.css") }} />
+  <link rel="stylesheet" href={{ static_url("bootstrap-5/css/bootstrap.min.css")}}>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+  <link rel="shortcut icon" href={{ static_url("img/logo.ico") }} type="image/x-icon" />
+  <title>Home</title>
+</head>
+<body>
+  <div class="page-container">
+    <!-- header start -->
+    <header class="header">
+      <div class="logo">
+        <img src={{ static_url("img/logo-big.png") }} alt="">
+      </div>
+      <div class="head-nav">
+        <ul class="nav-bar">
+          <li>我的主页</li>
+          <li>我的文件</li>
+        </ul>
+
+      </div>
+    </header>
+    <!-- header end -->
+
+    <!-- main area start -->
+    <div class="main-page">
+
+      <!-- side bar start -->
+      <div class="side-bar">
+        <div class="fixed-side">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Active</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- side bar end -->
+
+      <!-- main content start -->
+      <div class="content">
+        <div class="main-top">
+          <button type="button" class="btn btn-outline-primary">
+            <i class="bi-upload" style="font-size: 1rem; color: cornflowerblue;"></i>
+            上传文件
+          </button>
+          <button type="button" class="btn btn-outline-primary">
+            <i class="bi-folder-plus" style="font-size: 1rem; color: cornflowerblue;"></i>
+            新建文件夹
+          </button>
+          <form action="#" class="search">
+            <input type="text">
+            <input type="submit" value="Go">
+          </form>
+        </div>
+
+        <!-- Teal page content  -->
+        <div class="main-scroll">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">文件名</th>
+                <th scope="col">大小</th>
+                <th scope="col">修改日期</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in res['data'] %}
+                <tr>
+                  <th scope="row">2</th>
+                  <td>
+                    {% if item['type'] == 'dir' %}
+                      <i class="bi-folder-fill" style="font-size: 1.3rem; color: cornflowerblue;"></i>
+                      <a href="/home/all?path={{ item['path'] }}">{{ item['itemname'] }}</a>
+                    {% else %}
+                      <i class="bi-file-earmark" style="font-size: 1.3rem; color: cornflowerblue;"></i>
+                      <span>{{ item['itemname'] }}</span>
+                    {% end %}
+                  </td>
+                  <td>{{ item['size'] }}</td>
+                  <td>{{ item['mtime'] }}</td>
+                  <td>
+                    {% if item['type'] == 'file' %}
+                      <a href="/file/download/{{ item['path'] }}">
+                        <i class="bi-download" style="font-size: 1.3rem; color: cornflowerblue;"></i>
+                      </a>
+                    {% end %}
+                  </td>
+                </tr>
+              {% end %}
+            </tbody>
+          </table>
+                  
+        </div>
+        <!-- main content end -->
+      </div>
+    </div>
+    <!-- main area end -->
+  </div>
+<script src="bootstrap-5/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
